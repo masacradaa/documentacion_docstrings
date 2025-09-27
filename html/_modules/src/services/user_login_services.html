@@ -1,0 +1,404 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="../../../">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src.services.user_login_services &mdash; documentación de Antrack - </title>
+      <link rel="stylesheet" type="text/css" href="../../../_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="../../../_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="../../../_static/jquery.js?v=5d32c60e"></script>
+      <script src="../../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="../../../_static/documentation_options.js?v=e2bb6099"></script>
+      <script src="../../../_static/doctools.js?v=9bcbadda"></script>
+      <script src="../../../_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="../../../_static/translations.js?v=f85f4cfb"></script>
+    <script src="../../../_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="../../../genindex.html" />
+    <link rel="search" title="Búsqueda" href="../../../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../../index.html" class="icon icon-home">
+            Antrack
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../../search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenido:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../../modules.html">src</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../../index.html">Antrack</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../../index.html">Código de módulo</a></li>
+          <li class="breadcrumb-item"><a href="../../src.html">src</a></li>
+      <li class="breadcrumb-item active">src.services.user_login_services</li>
+      <li class="wy-breadcrumbs-aside">
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <h1>Código fuente para src.services.user_login_services</h1><div class="highlight"><pre>
+<span></span><span class="kn">from</span><span class="w"> </span><span class="nn">werkzeug.security</span><span class="w"> </span><span class="kn">import</span> <span class="n">generate_password_hash</span><span class="p">,</span> <span class="n">check_password_hash</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.repositories.user_repository</span><span class="w"> </span><span class="kn">import</span> <span class="n">DatosUsuario</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">src.models.user</span><span class="w"> </span><span class="kn">import</span> <span class="n">Usuario</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">re</span>
+
+<span class="n">PATRON_MINUSCULA</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;[a-z]&quot;</span>
+<span class="n">PATRON_MAYUSCULA</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;[A-Z]&quot;</span>
+<span class="n">PATRON_DIGITO</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;\d&quot;</span>
+<span class="n">PATRON_SIMBOLO</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;[@$!%*?&amp;#^()\-_=+\[\]</span><span class="si">{}</span><span class="s2">|;:,.&lt;&gt;/]&quot;</span>
+<span class="n">PATRON_USUARIO</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;^[A-Za-z0-9_]+$&quot;</span>
+<span class="n">PATRON_NOMBRE</span> <span class="o">=</span> <span class="sa">r</span><span class="s2">&quot;^[A-Za-z]+$&quot;</span>
+<span class="n">PATRON_CORREO</span> <span class="o">=</span> <span class="n">re</span><span class="o">.</span><span class="n">compile</span><span class="p">(</span>
+    <span class="sa">r</span><span class="s2">&quot;^(?!.*\.\.)&quot;</span>
+    <span class="sa">r</span><span class="s2">&quot;[A-Za-z0-9](?:[A-Za-z0-9._%+-]{0,62}[A-Za-z0-9])?&quot;</span>
+    <span class="sa">r</span><span class="s2">&quot;@&quot;</span>
+    <span class="sa">r</span><span class="s2">&quot;(?:[A-Za-z0-9](?:[A-Za-z0-9-]{0,61}[A-Za-z0-9])?\.)+&quot;</span>
+    <span class="sa">r</span><span class="s2">&quot;[A-Za-z]{2,24}$&quot;</span>
+<span class="p">)</span>
+<span class="n">LONGITUD_MIN_USUARIO</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">LONGITUD_MIN_CONTRASEÑA</span> <span class="o">=</span> <span class="mi">8</span>
+<span class="n">LONGITUD_MAX</span> <span class="o">=</span> <span class="mi">20</span>
+
+
+<div class="viewcode-block" id="ServicioLogin">
+<a class="viewcode-back" href="../../../src.services.html#src.services.user_login_services.ServicioLogin">[documentos]</a>
+<span class="k">class</span><span class="w"> </span><span class="nc">ServicioLogin</span><span class="p">:</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Servicio encargado de validar y manejar la lógica de autenticación y registro de usuarios.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+<div class="viewcode-block" id="ServicioLogin.validar_nombre">
+<a class="viewcode-back" href="../../../src.services.html#src.services.user_login_services.ServicioLogin.validar_nombre">[documentos]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validar_nombre</span><span class="p">(</span><span class="n">nombre</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Valida el campo de nombre.</span>
+
+<span class="sd">        **Reglas:**</span>
+<span class="sd">          - Debe ser un string no vacío.</span>
+<span class="sd">          - Debe tener entre 3 y 20 caracteres.</span>
+<span class="sd">          - Solo puede contener letras (mayúsculas o minúsculas).</span>
+
+<span class="sd">        :param nombre: Nombre del usuario.</span>
+<span class="sd">        :type nombre: str</span>
+<span class="sd">        :return: Lista de errores encontrados en el nombre.</span>
+<span class="sd">        :rtype: list[str]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">errores</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nombre</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">nombre</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+            <span class="n">errores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Debes ingresar un nombre.&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">nombre</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">LONGITUD_MIN_USUARIO</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">nombre</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">LONGITUD_MAX</span><span class="p">:</span>
+            <span class="n">errores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;El nombre debe tener entre 3 y 20 caracteres.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">PATRON_NOMBRE</span><span class="p">,</span> <span class="n">nombre</span><span class="p">):</span>
+            <span class="n">errores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;El nombre solo puede contener letras&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">errores</span></div>
+
+
+<div class="viewcode-block" id="ServicioLogin.validar_apellido">
+<a class="viewcode-back" href="../../../src.services.html#src.services.user_login_services.ServicioLogin.validar_apellido">[documentos]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validar_apellido</span><span class="p">(</span><span class="n">apellido</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Valida el campo de apellido.</span>
+
+<span class="sd">        **Reglas:**</span>
+<span class="sd">          - Debe ser un string no vacío.</span>
+<span class="sd">          - Debe tener entre 3 y 20 caracteres.</span>
+<span class="sd">          - Solo puede contener letras (mayúsculas o minúsculas).</span>
+
+<span class="sd">        :param apellido: Apellido del usuario.</span>
+<span class="sd">        :type apellido: str</span>
+<span class="sd">        :return: Lista de errores encontrados en el apellido.</span>
+<span class="sd">        :rtype: list[str]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">errores</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">apellido</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">apellido</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+            <span class="n">errores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Debes ingresar un apellido.&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">apellido</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">LONGITUD_MIN_USUARIO</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">apellido</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">LONGITUD_MAX</span><span class="p">:</span>
+            <span class="n">errores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;El apellido debe tener entre 3 y 20 caracteres.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">PATRON_NOMBRE</span><span class="p">,</span> <span class="n">apellido</span><span class="p">):</span>
+            <span class="n">errores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;El apellido solo puede contener letras&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">errores</span></div>
+
+
+<div class="viewcode-block" id="ServicioLogin.validar_usuario">
+<a class="viewcode-back" href="../../../src.services.html#src.services.user_login_services.ServicioLogin.validar_usuario">[documentos]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validar_usuario</span><span class="p">(</span><span class="n">nombre_usuario</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Valida el nombre de usuario.</span>
+
+<span class="sd">        **Reglas:**</span>
+<span class="sd">          - Debe ser un string no vacío.</span>
+<span class="sd">          - Longitud entre 3 y 20 caracteres.</span>
+<span class="sd">          - Puede contener letras, números y guiones bajos (`_`).</span>
+<span class="sd">          - No puede contener espacios ni símbolos especiales.</span>
+
+<span class="sd">        :param nombre_usuario: Nombre de usuario elegido.</span>
+<span class="sd">        :type nombre_usuario: str</span>
+<span class="sd">        :return: Lista de errores en el nombre de usuario.</span>
+<span class="sd">        :rtype: list[str]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">errores</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nombre_usuario</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">nombre_usuario</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+            <span class="n">errores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Debes ingresar un nombre de usuario.&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">nombre_usuario</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">LONGITUD_MIN_USUARIO</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">nombre_usuario</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">LONGITUD_MAX</span><span class="p">:</span>
+            <span class="n">errores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;El usuario debe tener entre 3 y 20 caracteres.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">match</span><span class="p">(</span><span class="n">PATRON_USUARIO</span><span class="p">,</span> <span class="n">nombre_usuario</span><span class="p">):</span>
+            <span class="n">errores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;El usuario solo puede contener letras, números y &#39;_&#39;.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">errores</span></div>
+
+
+<div class="viewcode-block" id="ServicioLogin.validar_correo">
+<a class="viewcode-back" href="../../../src.services.html#src.services.user_login_services.ServicioLogin.validar_correo">[documentos]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validar_correo</span><span class="p">(</span><span class="n">correo</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Valida el correo electrónico.</span>
+
+<span class="sd">        **Reglas:**</span>
+<span class="sd">          - No puede estar vacío.</span>
+<span class="sd">          - Debe cumplir con el formato estándar `usuario@dominio.ext`.</span>
+<span class="sd">          - El dominio debe ser válido y no contener `..`.</span>
+<span class="sd">          - La extensión debe tener entre 2 y 24 caracteres alfabéticos.</span>
+
+<span class="sd">        :param correo: Correo electrónico.</span>
+<span class="sd">        :type correo: str</span>
+<span class="sd">        :return: Lista de errores en el correo.</span>
+<span class="sd">        :rtype: list[str]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">errores</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">correo</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">correo</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+            <span class="n">errores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Debes ingresar un correo&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="n">re</span><span class="o">.</span><span class="n">fullmatch</span><span class="p">(</span><span class="n">PATRON_CORREO</span><span class="p">,</span> <span class="n">correo</span><span class="p">)</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+            <span class="n">errores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Por favor ingrese un correo válido&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">errores</span></div>
+
+
+<div class="viewcode-block" id="ServicioLogin.validar_contraseña">
+<a class="viewcode-back" href="../../../src.services.html#src.services.user_login_services.ServicioLogin.validar_contraseña">[documentos]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validar_contraseña</span><span class="p">(</span><span class="n">contraseña</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Valida la contraseña según reglas de seguridad.</span>
+
+<span class="sd">        **Reglas:**</span>
+<span class="sd">          - No puede estar vacía.</span>
+<span class="sd">          - Longitud entre 8 y 20 caracteres.</span>
+<span class="sd">          - Debe contener al menos:</span>
+<span class="sd">            * Una letra mayúscula.</span>
+<span class="sd">            * Una letra minúscula.</span>
+<span class="sd">            * Un número.</span>
+<span class="sd">            * Un símbolo especial (`@$!%*?&amp;#^()-_=+[]{}|;:,.&lt;&gt;/`).</span>
+
+<span class="sd">        :param contraseña: Contraseña elegida por el usuario.</span>
+<span class="sd">        :type contraseña: str</span>
+<span class="sd">        :return: Lista de errores en la contraseña.</span>
+<span class="sd">        :rtype: list[str]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">errores</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">contraseña</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">contraseña</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+            <span class="n">errores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Debes ingresar una contraseña.&quot;</span><span class="p">)</span>
+        <span class="k">elif</span> <span class="nb">len</span><span class="p">(</span><span class="n">contraseña</span><span class="p">)</span> <span class="o">&lt;</span> <span class="n">LONGITUD_MIN_CONTRASEÑA</span> <span class="ow">or</span> <span class="nb">len</span><span class="p">(</span><span class="n">contraseña</span><span class="p">)</span> <span class="o">&gt;</span> <span class="n">LONGITUD_MAX</span><span class="p">:</span>
+            <span class="n">errores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;La contraseña debe tener entre 8 y 20 caracteres.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">PATRON_MAYUSCULA</span><span class="p">,</span> <span class="n">contraseña</span><span class="p">):</span>
+            <span class="n">errores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Debe contener al menos una mayúscula.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">PATRON_MINUSCULA</span><span class="p">,</span> <span class="n">contraseña</span><span class="p">):</span>
+            <span class="n">errores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Debe contener al menos una minúscula.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">PATRON_DIGITO</span><span class="p">,</span> <span class="n">contraseña</span><span class="p">):</span>
+            <span class="n">errores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Debe contener al menos un número.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">re</span><span class="o">.</span><span class="n">search</span><span class="p">(</span><span class="n">PATRON_SIMBOLO</span><span class="p">,</span> <span class="n">contraseña</span><span class="p">):</span>
+            <span class="n">errores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Debe contener al menos un símbolo.&quot;</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">errores</span></div>
+
+
+<div class="viewcode-block" id="ServicioLogin.validar_contraseña_de_nuevo">
+<a class="viewcode-back" href="../../../src.services.html#src.services.user_login_services.ServicioLogin.validar_contraseña_de_nuevo">[documentos]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">validar_contraseña_de_nuevo</span><span class="p">(</span><span class="n">contraseña</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">contraseña_de_nuevo</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">list</span><span class="p">[</span><span class="nb">str</span><span class="p">]:</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Valida la contraseña de nuevo según.</span>
+
+<span class="sd">        **Reglas:**</span>
+<span class="sd">          - No puede estar vacía.</span>
+<span class="sd">          - Debe ser idéntica a la contraseña original</span>
+
+<span class="sd">        :param contraseña: Contraseña elegida por el usuario.</span>
+<span class="sd">        :type contraseña: str</span>
+<span class="sd">        :param contraseña_de_nuevo: Contraseña reingresada por el usuario.</span>
+<span class="sd">        :type contraseña_de_nuevo: str</span>
+<span class="sd">        :return: Lista de errores en la contraseña.</span>
+<span class="sd">        :rtype: list[str]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">errores</span> <span class="o">=</span> <span class="p">[]</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">contraseña</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">contraseña</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+            <span class="n">errores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;Debes ingresar una contraseña.&quot;</span><span class="p">)</span>
+        <span class="k">if</span> <span class="n">contraseña</span> <span class="o">!=</span> <span class="n">contraseña_de_nuevo</span><span class="p">:</span>
+            <span class="n">errores</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;La contraseña no coincide&quot;</span><span class="p">)</span>
+
+        <span class="k">return</span> <span class="n">errores</span></div>
+
+
+<div class="viewcode-block" id="ServicioLogin.registrar_usuario">
+<a class="viewcode-back" href="../../../src.services.html#src.services.user_login_services.ServicioLogin.registrar_usuario">[documentos]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">registrar_usuario</span><span class="p">(</span><span class="n">nombre</span><span class="p">,</span> <span class="n">apellido</span><span class="p">,</span> <span class="n">nombre_usuario</span><span class="p">,</span> <span class="n">correo</span><span class="p">,</span> <span class="n">contraseña</span><span class="p">,</span> <span class="n">contraseña_de_nuevo</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Registra un nuevo usuario después de validar todos los campos.</span>
+
+<span class="sd">        **Reglas de validación:**</span>
+<span class="sd">          - Nombre y apellido válidos (solo letras, entre 4 y 20 caracteres).</span>
+<span class="sd">          - Usuario válido (4-20 caracteres, letras/números/guiones bajos, único).</span>
+<span class="sd">          - Correo válido y único.</span>
+<span class="sd">          - Contraseña válida (8-20 caracteres, cumple las reglas de seguridad).</span>
+<span class="sd">          - La contraseña debe coincidir con la repetida.</span>
+
+<span class="sd">        :param nombre: Nombre del usuario.</span>
+<span class="sd">        :type nombre: str</span>
+<span class="sd">        :param apellido: Apellido del usuario.</span>
+<span class="sd">        :type apellido: str</span>
+<span class="sd">        :param nombre_usuario: Nombre de usuario único.</span>
+<span class="sd">        :type nombre_usuario: str</span>
+<span class="sd">        :param correo: Correo electrónico único.</span>
+<span class="sd">        :type correo: str</span>
+<span class="sd">        :param contraseña: Contraseña elegida.</span>
+<span class="sd">        :type contraseña: str</span>
+<span class="sd">        :param contraseña_de_nuevo: Repetición de la contraseña.</span>
+<span class="sd">        :type contraseña_de_nuevo: str</span>
+<span class="sd">        :return: Resultado del registro.</span>
+<span class="sd">                 `(True, {&quot;general&quot;: [&quot;Usuario registrado con éxito.&quot;]})` si es exitoso.</span>
+<span class="sd">                 `(False, {campo: [errores]})` si hay errores.</span>
+<span class="sd">        :rtype: tuple[bool, dict]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="n">errores</span> <span class="o">=</span> <span class="p">{</span>
+            <span class="s2">&quot;nombre&quot;</span><span class="p">:</span> <span class="n">ServicioLogin</span><span class="o">.</span><span class="n">validar_nombre</span><span class="p">(</span><span class="n">nombre</span><span class="p">),</span>
+            <span class="s2">&quot;apellido&quot;</span><span class="p">:</span> <span class="n">ServicioLogin</span><span class="o">.</span><span class="n">validar_apellido</span><span class="p">(</span><span class="n">apellido</span><span class="p">),</span>
+            <span class="s2">&quot;usuario&quot;</span><span class="p">:</span> <span class="n">ServicioLogin</span><span class="o">.</span><span class="n">validar_usuario</span><span class="p">(</span><span class="n">nombre_usuario</span><span class="p">),</span>
+            <span class="s2">&quot;correo&quot;</span><span class="p">:</span> <span class="n">ServicioLogin</span><span class="o">.</span><span class="n">validar_correo</span><span class="p">(</span><span class="n">correo</span><span class="p">),</span>
+            <span class="s2">&quot;contraseña&quot;</span><span class="p">:</span> <span class="n">ServicioLogin</span><span class="o">.</span><span class="n">validar_contraseña</span><span class="p">(</span><span class="n">contraseña</span><span class="p">),</span>
+            <span class="s2">&quot;contraseña_de_nuevo&quot;</span><span class="p">:</span> <span class="n">ServicioLogin</span><span class="o">.</span><span class="n">validar_contraseña_de_nuevo</span><span class="p">(</span><span class="n">contraseña</span><span class="p">,</span> <span class="n">contraseña_de_nuevo</span><span class="p">)</span>
+        <span class="p">}</span>
+
+        <span class="n">usuarios</span> <span class="o">=</span> <span class="n">DatosUsuario</span><span class="o">.</span><span class="n">cargar_usuarios</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">u</span> <span class="ow">in</span> <span class="n">usuarios</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">u</span><span class="o">.</span><span class="n">nombre_usuario</span> <span class="o">==</span> <span class="n">nombre_usuario</span><span class="p">:</span>
+                <span class="n">errores</span><span class="p">[</span><span class="s2">&quot;usuario&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;El usuario ya existe.&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">errores</span>
+            <span class="k">if</span> <span class="n">u</span><span class="o">.</span><span class="n">correo</span> <span class="o">==</span> <span class="n">correo</span><span class="p">:</span>
+                <span class="n">errores</span><span class="p">[</span><span class="s2">&quot;correo&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;El correo ya existe.&quot;</span><span class="p">)</span>
+                <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">errores</span>
+
+        <span class="k">if</span> <span class="nb">any</span><span class="p">(</span><span class="n">errores</span><span class="o">.</span><span class="n">values</span><span class="p">()):</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="n">errores</span>
+
+        <span class="k">try</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">contraseña</span> <span class="o">!=</span> <span class="n">contraseña_de_nuevo</span><span class="p">:</span>
+                <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;contraseña_de_nuevo&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;La contraseña no coincide&quot;</span><span class="p">]}</span>
+            <span class="n">contraseña_hash</span> <span class="o">=</span> <span class="n">generate_password_hash</span><span class="p">(</span><span class="n">contraseña</span><span class="p">)</span>
+            <span class="n">nuevo_usuario</span> <span class="o">=</span> <span class="n">Usuario</span><span class="p">(</span><span class="n">nombre</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">apellido</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">nombre_usuario</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">correo</span><span class="o">.</span><span class="n">strip</span><span class="p">(),</span> <span class="n">contraseña_hash</span><span class="p">)</span>
+            <span class="n">usuarios</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">nuevo_usuario</span><span class="p">)</span>
+            <span class="n">DatosUsuario</span><span class="o">.</span><span class="n">guardar_usuarios</span><span class="p">(</span><span class="n">usuarios</span><span class="p">)</span>
+            <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;general&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Usuario registrado con éxito.&quot;</span><span class="p">]}</span>
+        <span class="k">except</span> <span class="ne">OSError</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;general&quot;</span><span class="p">:</span> <span class="p">[</span><span class="s2">&quot;Error al guardar datos. Intenta nuevamente.&quot;</span><span class="p">]}</span>
+        <span class="k">except</span> <span class="ne">ValueError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;general&quot;</span><span class="p">:</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">e</span><span class="p">)]}</span></div>
+
+
+<div class="viewcode-block" id="ServicioLogin.autenticar_usuario">
+<a class="viewcode-back" href="../../../src.services.html#src.services.user_login_services.ServicioLogin.autenticar_usuario">[documentos]</a>
+    <span class="nd">@staticmethod</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">autenticar_usuario</span><span class="p">(</span><span class="n">nombre_usuario</span><span class="p">,</span> <span class="n">contraseña</span><span class="p">):</span>
+<span class="w">        </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">        Autentica un usuario comparando sus credenciales.</span>
+
+<span class="sd">        **Reglas:**</span>
+<span class="sd">          - Ambos campos son obligatorios.</span>
+<span class="sd">          - Usuario debe existir en la base de datos.</span>
+<span class="sd">          - Contraseña debe coincidir con el hash almacenado.</span>
+
+<span class="sd">        :param nombre_usuario: Nombre de usuario.</span>
+<span class="sd">        :type nombre_usuario: str</span>
+<span class="sd">        :param contraseña: Contraseña ingresada.</span>
+<span class="sd">        :type contraseña: str</span>
+<span class="sd">        :return: Resultado de la autenticación con mensaje.</span>
+<span class="sd">        :rtype: tuple[bool, dict]</span>
+<span class="sd">        &quot;&quot;&quot;</span>
+        <span class="k">if</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">nombre_usuario</span><span class="p">,</span> <span class="nb">str</span><span class="p">)</span> <span class="ow">or</span> <span class="ow">not</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">contraseña</span><span class="p">,</span> <span class="nb">str</span><span class="p">):</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;general&quot;</span><span class="p">:</span> <span class="s2">&quot;Credenciales inválidas&quot;</span><span class="p">}</span>
+
+        <span class="k">if</span> <span class="ow">not</span> <span class="n">nombre_usuario</span><span class="o">.</span><span class="n">strip</span><span class="p">()</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">contraseña</span><span class="o">.</span><span class="n">strip</span><span class="p">():</span>
+            <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;general&quot;</span><span class="p">:</span> <span class="s2">&quot;Por favor rellene los campos&quot;</span><span class="p">}</span>
+
+        <span class="n">usuarios</span> <span class="o">=</span> <span class="n">DatosUsuario</span><span class="o">.</span><span class="n">cargar_usuarios</span><span class="p">()</span>
+        <span class="k">for</span> <span class="n">usuario</span> <span class="ow">in</span> <span class="n">usuarios</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">usuario</span><span class="o">.</span><span class="n">nombre_usuario</span> <span class="o">==</span> <span class="n">nombre_usuario</span> <span class="ow">and</span> <span class="n">check_password_hash</span><span class="p">(</span><span class="n">usuario</span><span class="o">.</span><span class="n">contraseña_hash</span><span class="p">,</span> <span class="n">contraseña</span><span class="p">):</span>
+                <span class="k">return</span> <span class="kc">True</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;exito&quot;</span><span class="p">:</span> <span class="s2">&quot;Inicio de sesión exitoso.&quot;</span><span class="p">,</span>
+                              <span class="s2">&quot;user_id&quot;</span><span class="p">:</span> <span class="nb">int</span><span class="p">(</span><span class="n">usuario</span><span class="o">.</span><span class="n">user_id</span><span class="p">)}</span>
+        <span class="k">return</span> <span class="kc">False</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;general&quot;</span><span class="p">:</span> <span class="s2">&quot;Usuario o contraseña incorrectos.&quot;</span><span class="p">}</span></div>
+</div>
+
+</pre></div>
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2025, Juan Guzmán, Amy Moraga, Alexander Sepúlveda, Rodrigo San Juan.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

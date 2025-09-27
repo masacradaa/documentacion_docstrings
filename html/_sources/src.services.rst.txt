@@ -1,0 +1,29 @@
+src.services package
+====================
+
+Submodules
+----------
+
+src.services.expense\_service module
+------------------------------------
+
+.. automodule:: src.services.expense_service
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+src.services.user\_login\_services module
+-----------------------------------------
+
+.. automodule:: src.services.user_login_services
+   :members:
+   :show-inheritance:
+   :undoc-members:
+
+Module contents
+---------------
+
+.. automodule:: src.services
+   :members:
+   :show-inheritance:
+   :undoc-members:

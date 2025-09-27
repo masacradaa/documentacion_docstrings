@@ -1,0 +1,316 @@
+
+
+<!DOCTYPE html>
+<html class="writer-html5" lang="es" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>src package &mdash; documentación de Antrack - </title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
+
+  
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=e2bb6099"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script src="_static/translations.js?v=f85f4cfb"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Índice" href="genindex.html" />
+    <link rel="search" title="Búsqueda" href="search.html" />
+    <link rel="next" title="src.controllers package" href="src.controllers.html" />
+    <link rel="prev" title="src" href="modules.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            Antrack
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Buscar documentos" aria-label="Buscar documentos" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contenido:</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">src</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">src package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#subpackages">Subpackages</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.controllers.html">src.controllers package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.models.html">src.models package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.repositories.html">src.repositories package</a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.services.html">src.services package</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#submodules">Submodules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-src.config">src.config module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#src.config.Config"><code class="docutils literal notranslate"><span class="pre">Config</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-src.extensions">src.extensions module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-src.routes">src.routes module</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#src.routes.registrar_rutas"><code class="docutils literal notranslate"><span class="pre">registrar_rutas()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-src">Module contents</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#src.crear_app"><code class="docutils literal notranslate"><span class="pre">crear_app()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Antrack</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="modules.html">src</a></li>
+      <li class="breadcrumb-item active">src package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/src.rst.txt" rel="nofollow"> Ver código fuente de la página</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="src-package">
+<h1>src package<a class="headerlink" href="#src-package" title="Link to this heading"></a></h1>
+<section id="subpackages">
+<h2>Subpackages<a class="headerlink" href="#subpackages" title="Link to this heading"></a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="src.controllers.html">src.controllers package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.controllers.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.controllers.html#module-src.controllers.auth_controller">src.controllers.auth_controller module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.controllers.html#src.controllers.auth_controller.login"><code class="docutils literal notranslate"><span class="pre">login()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.controllers.html#src.controllers.auth_controller.logout"><code class="docutils literal notranslate"><span class="pre">logout()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.controllers.html#src.controllers.auth_controller.registro"><code class="docutils literal notranslate"><span class="pre">registro()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.controllers.html#module-src.controllers.expense_controller">src.controllers.expense_controller module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.controllers.html#src.controllers.expense_controller.editar_gasto"><code class="docutils literal notranslate"><span class="pre">editar_gasto()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.controllers.html#src.controllers.expense_controller.eliminar_gasto"><code class="docutils literal notranslate"><span class="pre">eliminar_gasto()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="src.controllers.html#src.controllers.expense_controller.gastos"><code class="docutils literal notranslate"><span class="pre">gastos()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.controllers.html#module-src.controllers">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="src.models.html">src.models package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.models.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.html#module-src.models.expense">src.models.expense module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.models.html#src.models.expense.Expense"><code class="docutils literal notranslate"><span class="pre">Expense</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.models.html#src.models.expense.Expense.a_diccionario"><code class="docutils literal notranslate"><span class="pre">Expense.a_diccionario()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.models.html#src.models.expense.Expense.desde_diccionario"><code class="docutils literal notranslate"><span class="pre">Expense.desde_diccionario()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.html#module-src.models.user">src.models.user module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.models.html#src.models.user.Usuario"><code class="docutils literal notranslate"><span class="pre">Usuario</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.models.html#src.models.user.Usuario.a_diccionario"><code class="docutils literal notranslate"><span class="pre">Usuario.a_diccionario()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.models.html#src.models.user.Usuario.desde_diccionario"><code class="docutils literal notranslate"><span class="pre">Usuario.desde_diccionario()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.models.html#module-src.models">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="src.repositories.html">src.repositories package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.repositories.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.repositories.html#module-src.repositories.expense_repository">src.repositories.expense_repository module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.repositories.html#src.repositories.expense_repository.ExpenseRepository"><code class="docutils literal notranslate"><span class="pre">ExpenseRepository</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.repositories.html#src.repositories.expense_repository.ExpenseRepository.actualizar_gasto"><code class="docutils literal notranslate"><span class="pre">ExpenseRepository.actualizar_gasto()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.repositories.html#src.repositories.expense_repository.ExpenseRepository.crear_gasto"><code class="docutils literal notranslate"><span class="pre">ExpenseRepository.crear_gasto()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.repositories.html#src.repositories.expense_repository.ExpenseRepository.dict_gastos_usuario"><code class="docutils literal notranslate"><span class="pre">ExpenseRepository.dict_gastos_usuario()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.repositories.html#src.repositories.expense_repository.ExpenseRepository.eliminar_gasto"><code class="docutils literal notranslate"><span class="pre">ExpenseRepository.eliminar_gasto()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.repositories.html#src.repositories.expense_repository.ExpenseRepository.listar_gastos_usuario"><code class="docutils literal notranslate"><span class="pre">ExpenseRepository.listar_gastos_usuario()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.repositories.html#src.repositories.expense_repository.ExpenseRepository.obtener_gasto"><code class="docutils literal notranslate"><span class="pre">ExpenseRepository.obtener_gasto()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.repositories.html#module-src.repositories.file_security">src.repositories.file_security module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.repositories.html#src.repositories.file_security.FileSecurity"><code class="docutils literal notranslate"><span class="pre">FileSecurity</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.repositories.html#src.repositories.file_security.FileSecurity.existe_storage"><code class="docutils literal notranslate"><span class="pre">FileSecurity.existe_storage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.repositories.html#src.repositories.file_security.FileSecurity.hacer_escritura"><code class="docutils literal notranslate"><span class="pre">FileSecurity.hacer_escritura()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.repositories.html#src.repositories.file_security.FileSecurity.hacer_solo_lectura"><code class="docutils literal notranslate"><span class="pre">FileSecurity.hacer_solo_lectura()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.repositories.html#src.repositories.file_security.FileSecurity.proteger_archivo"><code class="docutils literal notranslate"><span class="pre">FileSecurity.proteger_archivo()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.repositories.html#module-src.repositories.user_repository">src.repositories.user_repository module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.repositories.html#src.repositories.user_repository.DatosUsuario"><code class="docutils literal notranslate"><span class="pre">DatosUsuario</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.repositories.html#src.repositories.user_repository.DatosUsuario.cargar_usuarios"><code class="docutils literal notranslate"><span class="pre">DatosUsuario.cargar_usuarios()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.repositories.html#src.repositories.user_repository.DatosUsuario.get_nombre_usuario"><code class="docutils literal notranslate"><span class="pre">DatosUsuario.get_nombre_usuario()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.repositories.html#src.repositories.user_repository.DatosUsuario.get_userid"><code class="docutils literal notranslate"><span class="pre">DatosUsuario.get_userid()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.repositories.html#src.repositories.user_repository.DatosUsuario.guardar_usuarios"><code class="docutils literal notranslate"><span class="pre">DatosUsuario.guardar_usuarios()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.repositories.html#module-src.repositories">Module contents</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="src.services.html">src.services package</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="src.services.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="src.services.html#module-src.services.expense_service">src.services.expense_service module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.services.html#src.services.expense_service.ExpenseService"><code class="docutils literal notranslate"><span class="pre">ExpenseService</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.services.html#src.services.expense_service.ExpenseService.actualizar_gasto"><code class="docutils literal notranslate"><span class="pre">ExpenseService.actualizar_gasto()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.services.html#src.services.expense_service.ExpenseService.crear_gasto"><code class="docutils literal notranslate"><span class="pre">ExpenseService.crear_gasto()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.services.html#src.services.expense_service.ExpenseService.eliminar_gasto"><code class="docutils literal notranslate"><span class="pre">ExpenseService.eliminar_gasto()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.services.html#src.services.expense_service.ExpenseService.listar_gastos"><code class="docutils literal notranslate"><span class="pre">ExpenseService.listar_gastos()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.services.html#src.services.expense_service.ExpenseService.obtener_gasto"><code class="docutils literal notranslate"><span class="pre">ExpenseService.obtener_gasto()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.services.html#src.services.expense_service.ExpenseService.validar_gasto"><code class="docutils literal notranslate"><span class="pre">ExpenseService.validar_gasto()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.services.html#module-src.services.user_login_services">src.services.user_login_services module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="src.services.html#src.services.user_login_services.ServicioLogin"><code class="docutils literal notranslate"><span class="pre">ServicioLogin</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="src.services.html#src.services.user_login_services.ServicioLogin.autenticar_usuario"><code class="docutils literal notranslate"><span class="pre">ServicioLogin.autenticar_usuario()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.services.html#src.services.user_login_services.ServicioLogin.registrar_usuario"><code class="docutils literal notranslate"><span class="pre">ServicioLogin.registrar_usuario()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.services.html#src.services.user_login_services.ServicioLogin.validar_apellido"><code class="docutils literal notranslate"><span class="pre">ServicioLogin.validar_apellido()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.services.html#src.services.user_login_services.ServicioLogin.validar_contrasena"><code class="docutils literal notranslate"><span class="pre">ServicioLogin.validar_contraseña()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.services.html#src.services.user_login_services.ServicioLogin.validar_contrasena_de_nuevo"><code class="docutils literal notranslate"><span class="pre">ServicioLogin.validar_contraseña_de_nuevo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.services.html#src.services.user_login_services.ServicioLogin.validar_correo"><code class="docutils literal notranslate"><span class="pre">ServicioLogin.validar_correo()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.services.html#src.services.user_login_services.ServicioLogin.validar_nombre"><code class="docutils literal notranslate"><span class="pre">ServicioLogin.validar_nombre()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="src.services.html#src.services.user_login_services.ServicioLogin.validar_usuario"><code class="docutils literal notranslate"><span class="pre">ServicioLogin.validar_usuario()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="src.services.html#module-src.services">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-src.config">
+<span id="src-config-module"></span><h2>src.config module<a class="headerlink" href="#module-src.config" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="src.config.Config">
+<em class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">src.config.</span></span><span class="sig-name descname"><span class="pre">Config</span></span><a class="reference internal" href="_modules/src/config.html#Config"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#src.config.Config" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Clase de configuración para la aplicación Flask.</p>
+<p>Las variables se cargan desde el entorno usando <code class="docutils literal notranslate"><span class="pre">dotenv</span></code>.
+Si no existe la variable <code class="docutils literal notranslate"><span class="pre">SECRET_KEY</span></code>, se utiliza un valor por defecto.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="src.config.Config.SECRET_KEY">
+<span class="sig-name descname"><span class="pre">SECRET_KEY</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">'DEFAULT'</span></em><a class="headerlink" href="#src.config.Config.SECRET_KEY" title="Link to this definition"></a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-src.extensions">
+<span id="src-extensions-module"></span><h2>src.extensions module<a class="headerlink" href="#module-src.extensions" title="Link to this heading"></a></h2>
+</section>
+<section id="module-src.routes">
+<span id="src-routes-module"></span><h2>src.routes module<a class="headerlink" href="#module-src.routes" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.routes.registrar_rutas">
+<span class="sig-prename descclassname"><span class="pre">src.routes.</span></span><span class="sig-name descname"><span class="pre">registrar_rutas</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">app</span></span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/src/routes.html#registrar_rutas"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#src.routes.registrar_rutas" title="Link to this definition"></a></dt>
+<dd><p>Registra todos los blueprints de los controladores en la aplicación principal.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parámetros<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>app</strong> (<em>flask.Flask</em>) – Instancia principal de Flask donde se registrarán los blueprints.</p>
+</dd>
+<dt class="field-even">Devuelve<span class="colon">:</span></dt>
+<dd class="field-even"><p>None</p>
+</dd>
+<dt class="field-odd">Tipo del valor devuelto<span class="colon">:</span></dt>
+<dd class="field-odd"><p>None</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-src">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-src" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="src.crear_app">
+<span class="sig-prename descclassname"><span class="pre">src.</span></span><span class="sig-name descname"><span class="pre">crear_app</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/src.html#crear_app"><span class="viewcode-link"><span class="pre">[fuente]</span></span></a><a class="headerlink" href="#src.crear_app" title="Link to this definition"></a></dt>
+<dd><p>Crea e inicializa la aplicación Flask.</p>
+<ul class="simple">
+<li><p>Carga la configuración desde <code class="xref py py-class docutils literal notranslate"><span class="pre">Config</span></code>.</p></li>
+<li><p>Registra los blueprints de los distintos controladores.</p></li>
+<li><p>Define un middleware <code class="docutils literal notranslate"><span class="pre">after_request</span></code> para evitar el cache en las respuestas.</p></li>
+<li><p>Registra la ruta raíz (<code class="docutils literal notranslate"><span class="pre">/</span></code>) que renderiza <code class="docutils literal notranslate"><span class="pre">home.html</span></code>.</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Devuelve<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Instancia configurada de Flask.</p>
+</dd>
+<dt class="field-even">Tipo del valor devuelto<span class="colon">:</span></dt>
+<dd class="field-even"><p>flask.Flask</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Pie de página">
+        <a href="modules.html" class="btn btn-neutral float-left" title="src" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Anterior</a>
+        <a href="src.controllers.html" class="btn btn-neutral float-right" title="src.controllers package" accesskey="n" rel="next">Siguiente <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Derechos de autor 2025, Juan Guzmán, Amy Moraga, Alexander Sepúlveda, Rodrigo San Juan.</p>
+  </div>
+
+  Compilado con <a href="https://www.sphinx-doc.org/">Sphinx</a> usando un
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">tema</a>
+    proporcionado por <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

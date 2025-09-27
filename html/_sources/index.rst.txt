@@ -1,0 +1,33 @@
+.. Antrack documentation master file, created by
+   sphinx-quickstart on Sat Sep 20 04:15:44 2025.
+   You can adapt this file completely to your liking, but it should at least
+   contain the root `toctree` directive.
+
+Antrack documentation
+=====================
+
+¿Qué es un gasto hormiga?
+
+Una problemática presente hoy en día son los gastos hormiga, los cuales consisten en desembolsos de dinero realizados de manera esporádica en compras menores que a la larga:
+
+    - Se transforman en un gasto considerable y generalmente innecesario.
+    - Generan un desbalance en el dinero disponible para gastos básicos.
+    - Empeoran la calidad de vida de las personas al contar con menos dinero.
+
+Esta situación afecta negativamente a los consumidores, quienes por lo general no son conscientes de cuánto destinan a estas pequeñas compras.
+Nuestra solución:
+
+Buscamos disminuir este problema mediante una interfaz que permita al usuario llevar un registro accesible y visual de los gastos efectuados en un periodo de tiempo:
+
+    - Identificando cuáles corresponden a gastos hormiga
+    - Ofreciendo herramientas para gestionarlos de mejor manera
+    - Mejorar hábitos de ahorro
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Contenido:
+
+   modules
+
+
